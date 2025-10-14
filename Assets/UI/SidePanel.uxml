@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="TabView" src="project://database/Assets/UI/TabView.uxml?fileID=9197481963319205126&amp;guid=b475198a21711d24c8b24fbc3345df18&amp;type=3#TabView" />
+    <ui:Label text="1000" data-source-type="PlayerDataView, Assembly-CSharp" name="Credit">
+        <Bindings>
+            <ui:DataBinding property="text" data-source-path="Credits" binding-mode="ToTarget" />
+        </Bindings>
+    </ui:Label>
+    <ui:Instance template="TabView" />
+</ui:UXML>

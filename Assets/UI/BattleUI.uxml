@@ -1,0 +1,4 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="SidePanel" src="project://database/Assets/UI/SidePanel.uxml?fileID=9197481963319205126&amp;guid=d2e11f0c967949947b9e45988132b7bb&amp;type=3#SidePanel" />
+    <ui:Instance template="SidePanel" name="SidePanelInstance" style="width: 350px; align-self: flex-end; height: 100%;" />
+</ui:UXML>

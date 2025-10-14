@@ -1,0 +1,25 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="ItemImage" data-source="project://database/Assets/Scriptable%20Objects/Buildings/Barracks.asset?fileID=11400000&amp;guid=63610f5aebc20f1499c79615994bdf08&amp;type=2#Barracks" data-source-type="BuildingDataView, Assembly-CSharp" style="flex-grow: 1; background-image: none; flex-direction: column-reverse; width: 125px; height: 125px; position: relative; margin-top: 10px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;">
+        <ui:VisualElement style="height: 24%; -unity-background-image-tint-color: rgb(0, 0, 0); background-color: rgba(0, 0, 0, 0.69);">
+            <ui:Label text="Barracks" name="ItemName" data-source-type="BuildingDataView, Assembly-CSharp" style="color: rgb(255, 255, 255);">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="Data._name" binding-mode="ToTargetOnce" />
+                </Bindings>
+            </ui:Label>
+        </ui:VisualElement>
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; width: 125px; height: 100%; position: absolute; background-color: rgba(250, 197, 22, 0.5);">
+            <ui:VisualElement enabled="false" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.45); width: 50px; position: absolute; top: 10px; left: 8px;">
+                <ui:Label text="Ready" enabled="true" style="color: rgb(255, 255, 255);" />
+                <Bindings>
+                    <ui:DataBinding property="enabledSelf" data-source-path="IsReadyForPlacement" data-source-type="BuildingDataView, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:VisualElement>
+            <Bindings>
+                <ui:DataBinding property="style.width" data-source-path="Progress" data-source-type="BuildingDataView, Assembly-CSharp" binding-mode="ToTarget" />
+            </Bindings>
+        </ui:VisualElement>
+        <Bindings>
+            <ui:DataBinding property="style.backgroundImage" data-source-path="Data._icon" data-source-type="BuildingDataView, Assembly-CSharp" binding-mode="ToTarget" />
+        </Bindings>
+    </ui:VisualElement>
+</ui:UXML>

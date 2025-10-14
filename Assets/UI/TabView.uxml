@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:TabView>
+        <ui:Tab label="Base" name="Base" view-data-key="BaseViewKey">
+            <ui:VisualElement name="BaseItemsParent" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap;" />
+        </ui:Tab>
+        <ui:Tab label="Infantry" name="Infantry" view-data-key="InfantryViewKey">
+            <ui:VisualElement name="InfantryItemsParent" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap;" />
+        </ui:Tab>
+    </ui:TabView>
+</ui:UXML>
