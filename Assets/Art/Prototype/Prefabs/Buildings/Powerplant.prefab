@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingAuthoring
   PhysicsShapeAuthoring: {fileID: 9154411072702823290}
+  SpawnLocation: {fileID: 0}
   Type: 1
 --- !u!114 &9154411072702823290
 MonoBehaviour:
@@ -63,12 +64,12 @@ MonoBehaviour:
   m_ShapeType: 0
   m_PrimitiveCenter:
     x: 0
-    y: 10.92
+    y: 2
     z: 0
   m_PrimitiveSize:
-    x: 48.3
-    y: 20
-    z: 80
+    x: 10.388092
+    y: 4.2
+    z: 16.15428
   m_PrimitiveOrientation:
     Value:
       x: 0
@@ -76,15 +77,15 @@ MonoBehaviour:
       z: 0
     RotationOrder: 4
   m_Capsule:
-    Height: 80
-    Radius: 24.15
+    Height: 16.15428
+    Radius: 5.194046
     Axis: 2
   m_Cylinder:
-    Height: 80
-    Radius: 24.15
-    Axis: 2
+    Height: 4.2
+    Radius: 8.07714
+    Axis: 1
   m_CylinderSideCount: 20
-  m_SphereRadius: 40
+  m_SphereRadius: 8.07714
   m_MinimumSkinnedVertexWeight: 0.1
   m_ConvexHullGenerationParameters:
     m_SimplificationTolerance: 0.015
@@ -200,12 +201,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 3352015756425937023}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8cef18bc24b747048825407eb5174773, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8cef18bc24b747048825407eb5174773, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8cef18bc24b747048825407eb5174773, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8cef18bc24b747048825407eb5174773, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8cef18bc24b747048825407eb5174773, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8cef18bc24b747048825407eb5174773, type: 3}
       propertyPath: m_LocalPosition.z

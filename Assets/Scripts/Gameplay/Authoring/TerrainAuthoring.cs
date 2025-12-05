@@ -1,4 +1,6 @@
+using CrossCut.Pathfinding.Components;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace CrossCut.Gameplay
@@ -8,7 +10,7 @@ namespace CrossCut.Gameplay
         [SerializeField] public int Scale = 1;
         [SerializeField] public int GridWidth = 10;
         [SerializeField] public int GridHeight = 10;
-        [SerializeField] public GameObject QuadPrefab; // Assign your quad prefab here
+        [SerializeField] public GameObject QuadPrefab;
 
         class Baker : Baker<TerrainAuthoring>
         {
@@ -22,6 +24,22 @@ namespace CrossCut.Gameplay
                     , GridWidth = authoring.GridWidth
                     , GridHeight = authoring.GridHeight
                 });
+
+                AddComponent(entity, new PathfindingGridComponent
+                {
+                    GridWidth = authoring.GridWidth,
+                    GridHeight = authoring.GridHeight,
+                    CellSize = authoring.Scale,
+                    GridOrigin = new float3(-0.5f * authoring.Scale, 0, -0.5f * authoring.Scale)
+                });
+
+                AddComponent(entity, new PathfindingSettingsComponent()
+                {
+                    allowDiagonalMovement = true,
+                    moveCost = 1
+                });
+
+                AddBuffer<GridPathNodeBuffer>(entity);
             }
         }
     }

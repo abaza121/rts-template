@@ -2,7 +2,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
+using Unity.Transforms;
 
 partial struct MovementSystem : ISystem
 {
@@ -20,7 +20,7 @@ partial struct MovementSystem : ISystem
         var ecb = new EntityCommandBuffer(Allocator.Temp);
         float3 spawnPosition = float3.zero;
         bool spawnPositionSet = false;
-        foreach (var (movement, entity) in SystemAPI.Query<MovementComponent>().WithEntityAccess())
+        foreach (var (movement,transform, entity) in SystemAPI.Query<MovementComponent, LocalTransform>().WithEntityAccess())
         {
             if (movement.CurrentLocation.x == float.MaxValue)
             {
@@ -43,7 +43,10 @@ partial struct MovementSystem : ISystem
                 var newMovement = movement;
                 newMovement.IsMoving = false;
                 newMovement.CurrentLocation = spawnPosition;
+                var newTransform = transform;
+                newTransform.Position = newMovement.CurrentLocation;
                 ecb.SetComponent(entity, newMovement);
+                ecb.SetComponent(entity, newTransform);
             }
             else
             {
@@ -52,15 +55,17 @@ partial struct MovementSystem : ISystem
                 if(movement.Destination.x != 0 || movement.Destination.y != 0 || movement.Destination.z != 0)
                 {
                     MoveTowards(ref newMovement, movement.Destination, SystemAPI.Time.DeltaTime);
+                    newMovement.IsMoving = true;
                 }
                 else
                 {
-                    // Move randomly
-                    newMovement.Destination = newMovement.CurrentLocation + new float3(random.NextFloat(10),0, random.NextFloat(10));
+                    newMovement.IsMoving = false;
                 }
 
-                newMovement.IsMoving = true;
+                var newTransform = transform;
+                newTransform.Position = newMovement.CurrentLocation;
                 ecb.SetComponent(entity, newMovement);
+                ecb.SetComponent(entity, newTransform);
             }
         }
 
@@ -70,16 +75,16 @@ partial struct MovementSystem : ISystem
 
     private void MoveTowards(ref MovementComponent movement, float3 targetPosition, float deltaTime)
     {
-        float3 direction = math.normalize(targetPosition - movement.CurrentLocation);
-        movement.CurrentLocation += direction * movement.Speed * deltaTime;
-        movement.CurrentDirection = quaternion.LookRotation(direction, math.up());
-
-        // Check if reached target
-        if (math.distancesq(movement.CurrentLocation, targetPosition) < 0.1f)
+        if(math.distancesq(movement.CurrentLocation, targetPosition) < 0.01f)
         {
             movement.CurrentLocation = targetPosition;
             movement.Destination = float3.zero; // Clear target
+            return;
         }
+
+        float3 direction = math.normalize(targetPosition - movement.CurrentLocation);
+        movement.CurrentLocation += direction * movement.Speed * deltaTime;
+        movement.CurrentDirection = quaternion.LookRotation(direction, math.up());
     }
 
     [BurstCompile]

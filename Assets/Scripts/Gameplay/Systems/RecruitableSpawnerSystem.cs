@@ -53,14 +53,7 @@ partial struct RecruitableSpawnerSystem : ISystem
             // Add components directly using EntityManager for immediate effect
             ecb.AddComponent(spawnedEntity, new AnimationComponent 
             { 
-                IsWalking = false,
                 animationObject = gameObject
-            });
-
-            ecb.AddComponent(spawnedEntity, new MovementComponent 
-            { 
-                CurrentLocation = new float3(float.MaxValue, float.MaxValue, float.MaxValue),
-                Speed = 5f
             });
 
             // Use ECB only for cleanup

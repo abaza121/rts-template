@@ -10,6 +10,7 @@ class SelectableUnitAuthoringBaker : Baker<SelectableUnitAuthoring>
 {
     public override void Bake(SelectableUnitAuthoring authoring)
     {
-        
+        var entity = GetEntity(TransformUsageFlags.Dynamic);
+        AddComponent<SelectableComponent>(entity);
     }
 }

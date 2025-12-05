@@ -17,8 +17,8 @@ partial struct AnimationSystem : ISystem
 
         foreach (var (animation, movement) in SystemAPI.Query<AnimationComponent, MovementComponent>())
         {
-            animation.animationObject.transform.localRotation = movement.CurrentDirection;
-            animation.animationObject.transform.localPosition = movement.CurrentLocation;
+            animation.animationObject.transform.rotation = movement.CurrentDirection;
+            animation.animationObject.transform.position = movement.CurrentLocation;
             animation.animationObject.gameObject.GetComponent<Animator>().SetBool(isMovingId, movement.IsMoving);
         }
     }

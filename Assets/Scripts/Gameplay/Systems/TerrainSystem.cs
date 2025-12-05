@@ -1,9 +1,8 @@
+using CrossCut.Pathfinding.Components;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
-using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace CrossCut.Gameplay.Systems
 {
@@ -18,7 +17,11 @@ namespace CrossCut.Gameplay.Systems
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+            var entity = SystemAPI.GetSingletonEntity<TerrainComponent>();
+            var buffer = SystemAPI.GetBuffer<GridPathNodeBuffer>(entity);
             var terrainComponent = SystemAPI.GetSingleton<TerrainComponent>();
+            var pathfindingGridComponent = SystemAPI.GetSingleton<PathfindingGridComponent>();
+
             int width = terrainComponent.GridWidth;
             int height = terrainComponent.GridHeight;
             int count = width * height;
@@ -32,7 +35,17 @@ namespace CrossCut.Gameplay.Systems
                 {
                     int index = x * height + y; // row-major order
                     var cellTransform = SystemAPI.GetComponentRW<LocalTransform>(instances[index]);
-                    cellTransform.ValueRW.Position = new Unity.Mathematics.float3(x * terrainComponent.Scale, 0, y * terrainComponent.Scale);
+                    var worldPos = new Unity.Mathematics.float3(x * terrainComponent.Scale, 0, y * terrainComponent.Scale);
+                    cellTransform.ValueRW.Position = worldPos;
+                    cellTransform.ValueRW.Scale = terrainComponent.Scale;
+                    buffer.Insert(index, new GridPathNodeBuffer
+                    {
+                        Value = new PathNode
+                        {
+                            worldPosition = worldPos,
+                            isWalkable = true
+                        }
+                    });
                 }
             }
 

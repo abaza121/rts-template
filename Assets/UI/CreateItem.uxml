@@ -18,6 +18,16 @@
                 <ui:DataBinding property="style.width" data-source-path="Progress" data-source-type="BuildingDataView, Assembly-CSharp" binding-mode="ToTarget" />
             </Bindings>
         </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.45); width: 30px; position: absolute; top: 10px; left: auto; right: 10px; visibility: visible; display: flex;">
+            <ui:Label text="100" enabled="true" style="color: rgb(255, 255, 255);">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="InQueue" data-source-type="BuildingDataView, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
+            <Bindings>
+                <ui:DataBinding property="style.display" data-source-path="ShowInQueueCount" data-source-type="BuildingDataView, Assembly-CSharp" binding-mode="ToTarget" />
+            </Bindings>
+        </ui:VisualElement>
         <Bindings>
             <ui:DataBinding property="style.backgroundImage" data-source-path="Data._icon" data-source-type="BuildingDataView, Assembly-CSharp" binding-mode="ToTarget" />
         </Bindings>

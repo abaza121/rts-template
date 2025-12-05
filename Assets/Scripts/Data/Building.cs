@@ -1,4 +1,5 @@
 using Unity.Entities;
+using CrossCut.Pathfinding.Components;
 
 public struct Building : IComponentData
 {

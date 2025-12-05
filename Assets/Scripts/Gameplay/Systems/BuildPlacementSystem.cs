@@ -191,7 +191,13 @@ partial struct BuildPlacementSystem : ISystem
                         Rotation = quaternion.identity
                     });
 
-                    if(SystemAPI.HasComponent<SpawnPositionComponent>(buildingEntity))
+                    ecb.AddComponent(buildingEntity, new PathfindingGridObstacleComponent
+                    {
+                        BoundsSize = new float2(bounds.HalfExtents.x * 2f, bounds.HalfExtents.z * 2f),
+                        CenterOffset = new float2(bounds.CenterOffset.x, bounds.CenterOffset.z)
+                    });
+
+                    if (SystemAPI.HasComponent<SpawnPositionComponent>(buildingEntity))
                     {
                         var spawnPositionComponent = SystemAPI.GetComponentRW<SpawnPositionComponent>(buildingEntity);
                         spawnPositionComponent.ValueRW.Value = spawnPositionComponent.ValueRO.Value + new float3(hitPoint.x, hitPoint.y, hitPoint.z);

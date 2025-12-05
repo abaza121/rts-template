@@ -30,6 +30,7 @@ public class SkirmishUIController : MonoBehaviour
             var instance = _itemTemplate.Instantiate();
             var buildingDataView = new BuildingDataView { Id = building.BuildingType, Data = building };
             buildingDataView.IsBuilding = true;
+            buildingDataView.ShowInQueueCount = DisplayStyle.None;
             Debug.Log($"Adding building {building.name} with ID {buildingDataView.Id}");
             _viewMap.Add(buildingDataView.Id, buildingDataView);
             buildingDataView.Data = building;
@@ -62,21 +63,12 @@ public class SkirmishUIController : MonoBehaviour
 
         for (int i = 0; i < dataArray.Length; i++)
         {
-            Debug.Log($"Processing building queue entity {entityArray[i]} with data {dataArray[i]}");
             var data = dataArray[i];
             if (_viewMap.TryGetValue(data.Id, out var view))
             {
                 view.Progress = (1-(data.RemainingCredit/view.Data.Cost))*125;
                 view.InQueue = data.InQueue;
-                // Optionally update UI elements here
-                if (data.InQueue == 0)
-                {
-                    view.Progress = 0;
-                    if(view.IsBuilding)
-                    {
-                        view.IsReadyForPlacement = true;
-                    }
-                }
+                view.ShowInQueueCount = view.IsBuilding ? DisplayStyle.None : DisplayStyle.Flex;
             }
         }
 
@@ -111,6 +103,12 @@ public class SkirmishUIController : MonoBehaviour
                     //TODO : Change architecture to avoid this, create a notification for building done and consume it here.
                     World.DefaultGameObjectInjectionWorld.EntityManager.DestroyEntity(entityArray[i]);
                 }
+                else if (view.InQueue == 1)
+                {
+                    view.InQueue = 0;
+                    view.ShowInQueueCount = DisplayStyle.None;
+                    // Don't consume here for other recruitables as they spawn by a differen system (RecruitableSpawnerSystem).
+                }
             }
         }
 
@@ -139,6 +137,8 @@ public class SkirmishUIController : MonoBehaviour
                 {
                     var instance = _itemTemplate.Instantiate();
                     var infantryDataView = new BuildingDataView { Id = infantry.BuildingType, Data = infantry }; // Use a different ID range for infantry
+                    infantryDataView.IsBuilding = false;
+                    infantryDataView.ShowInQueueCount = DisplayStyle.None;
                     Debug.Log($"Adding infantry {infantry.name} with ID {infantryDataView.Id}");
                     _viewMap.Add(infantryDataView.Id, infantryDataView);
                     infantryDataView.Data = infantry;
@@ -146,7 +146,6 @@ public class SkirmishUIController : MonoBehaviour
                     instance.Q("ItemImage").RegisterCallback<ClickEvent>(evt => {
                         var dataView = evt.currentTarget as VisualElement;
                         var data = dataView.dataSource as BuildingDataView;
-                        Debug.Log($"Clicked on {data.Data.name}");
                         OnInfantryItemPressed(infantryDataView);
                     });
                     _uiDocument.rootVisualElement.Q("SidePanelInstance").Q("InfantryItemsParent").Add(instance);
