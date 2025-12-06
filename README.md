@@ -56,6 +56,58 @@ The project follows a standard Unity ECS architecture, organized primarily by fe
 To view the underlying pathfinding grid and debug information:
 *   Enable the **PathfindingDebugger** in the Skirmish scene. This will render the pathfinding map and other debug visuals.
 
+## Adding a Unit
+
+In this project, you can add Units by specifying the art and 3D dimensions.
+
+### 1. Define Unit Type
+*   Add the enum for the new unit in `BuilderComponent`.
+
+### 2. Configure 2D Art and Cost
+*   Define the unit's data in a new `BuildingDataSO`.
+*   Add this `BuildingDataSO` to  `DefaultInfantryConfig`:
+
+### 3. Configure 3D Art (Repository)
+*   Locate the `RecruitableRepoAuthoring` prefab/component.
+*   Add a new entry for the unit entity and its corresponding GameObject animation prefab.
+    *   This creates a repository of data in entities that defines how the prefab looks and what it is capable of.
+<!-- //TODO: Add photo of RecruitableRepoAuthoring inspector -->
+
+### 4. Create Unit Entity Prefab
+Create a new Prefab for the unit entity:
+*   **Tag**: Set to `EntityPrefab`.
+*   **Required Components**:
+    *   `Physics Body` (Unity Physics)
+    *   `Physics Shape` (Unity Physics)
+    *   `SelectableUnitAuthoring`: Enables command handling.
+    *   `MovableUnitAuthoring`: Enables movement capabilities.
+    *   `RecruitableEntityPrefabAuthoring`: Binds the entity to the animated GameObject.
+<!-- //TODO: Add photo of Unit Entity Prefab inspector -->
+
+
+## Adding a Building
+In this project, you can add buildings for placement by specifying the art and 3D dimensions.
+
+### 1. Define Building Type
+*   Add the enum for the new unit in `BuilderComponent`.
+
+### 2. Configure 2D Art and Cost
+*   Define the building's data in a `BuildingDataSO`.
+*   Add this `BuildingDataSO` to `DefaultBuildingConfig`.
+
+### 3. Configure 3D Art (Repository)
+*   Locate the `BuildingRepoAuthoring` game object in the Authoring prefab.
+*   Add a new entry for the unit entity and its corresponding GameObject animation prefab.
+    *   This creates a repository of data in entities that defines how the prefab looks and what it is capable of.
+
+### 4. Create Building Entity Prefab
+Create a new Prefab for the unit entity:
+*   **Tag**: Set to `EntityPrefab`.
+*   **Required Components**:
+    *   `Physics Shape` (Unity Physics)
+    *   `BuildingAuthoring`: Binds the entity to the PhysicsShape.
+<!-- //TODO: Add photo of Unit Entity Prefab inspector -->
+
 ## Roadmap / Status
 
 *   **Current State**: Prototype / Template.

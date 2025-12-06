@@ -6,12 +6,12 @@ using Unity.Transforms;
 
 partial struct MovementSystem : ISystem
 {
-    private Unity.Mathematics.Random random;
+    private Random random;
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<MovementComponent>();
-        random = Unity.Mathematics.Random.CreateFromIndex((uint)SystemAPI.Time.ElapsedTime);
+        random = Random.CreateFromIndex((uint)SystemAPI.Time.ElapsedTime);
     }
 
     [BurstCompile]
@@ -75,7 +75,7 @@ partial struct MovementSystem : ISystem
 
     private void MoveTowards(ref MovementComponent movement, float3 targetPosition, float deltaTime)
     {
-        if(math.distancesq(movement.CurrentLocation, targetPosition) < 0.01f)
+        if(math.distancesq(movement.CurrentLocation, targetPosition) < 0.1f)
         {
             movement.CurrentLocation = targetPosition;
             movement.Destination = float3.zero; // Clear target

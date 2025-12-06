@@ -23,7 +23,7 @@ partial struct CreditSystem : ISystem
         foreach (var buildingData in SystemAPI.Query<RefRW<BuildingDataQueueEntity>>())
         {
             var bd = buildingData.ValueRO;
-            if (bd.InQueue <= 0 || bd.OwnerPlayerId < 0)
+            if (bd.InQueue <= 0 || bd.OwnerPlayerId < 0 || bd.RemainingCredit == 0)
                 continue;
 
             // Calculate credit cost per second
